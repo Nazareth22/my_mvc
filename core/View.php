@@ -11,7 +11,7 @@ namespace core;
 
 class View
 {
-    public static function render($view, $args = [])
+    public function render($view, $args = [])
     {
         extract($args, EXTR_SKIP);
         $file = dirname(__DIR__) . "/src/Views/$view";
@@ -22,7 +22,7 @@ class View
         }
     }
 
-    public static function renderTemplate($template, $args = [])
+    public function renderTemplate($template, $args = [])
     {
         static $twig = null;
         if ($twig === null) {

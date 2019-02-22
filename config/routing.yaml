@@ -1,4 +1,0 @@
-home:
-  path: /
-  controller: Home
-  action: index
