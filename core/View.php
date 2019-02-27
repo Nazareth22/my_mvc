@@ -1,13 +1,15 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: MVYaroslavcev
+ * UserModel: MVYaroslavcev
  * Date: 21/02/19
  * Time: 12:34
  */
 
 namespace core;
 
+
+use http\Message;
 
 class View
 {
@@ -30,6 +32,15 @@ class View
             $twig = new \Twig_Environment($loader);
         }
         echo $twig->render($template, $args);
+    }
+
+    public static function errorCode($code) {
+        http_response_code($code);
+        $path = 'src/views/errors/'.$code.'.php';
+        if (file_exists($path)) {
+            require $path;
+        }
+        exit;
     }
 
 }

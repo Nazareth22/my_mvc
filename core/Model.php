@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: MVYaroslavcev
+ * UserModel: MVYaroslavcev
  * Date: 21/02/19
  * Time: 12:11
  */
@@ -13,18 +13,31 @@ use PDO;
 
 abstract class Model
 {
-    protected static function getConnection()
+    protected $db;
+
+    public function __construct()
     {
         $config = new Config();
-        static $conn = null;
-        if ($conn === null) {
-            $dsn = 'mysql:host=' .$config->getHost(). ';dbname=' .$config->getDatabase(). ';charset=utf8';
-            $conn = new PDO($dsn, $config->getLogin(), $config->getPassword());
+        $dsn = 'mysql:host=' .$config->getHost(). ';dbname=' .$config->getDatabase(). ';charset=utf8';
+        $this->db = new PDO($dsn, $config->getLogin(), $config->getPassword());
 
-            $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        }
-        return $conn;
+    }
+    public function query($sql)
+    {
+        $result = $this->db->query( $sql );
+        return $result;
+    }
 
+    public function assoc( $sql )
+    {
+        $result = $this->db->query( $sql );
+        return $result->fetchAll( PDO::FETCH_ASSOC );
+    }
+
+    public function obj( $sql )
+    {
+        $result = $this->db->query( $sql );
+        return $result->fetchAll( PDO::FETCH_OBJ );
     }
 
 }
